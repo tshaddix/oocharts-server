@@ -5,8 +5,7 @@
 var http = require('http');
 
 var config = require('./config');
-var nconf = require('nconf');
-var port = nconf.get('port');
+var port = config.get('port');
 
 var run = function(){
     http.createServer(config.express).listen(port, function(){

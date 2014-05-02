@@ -14,3 +14,5 @@ app.use(require('body-parser')());
 // Controllers
 app.use('/setup', controllers.setup);
 app.use('/api', controllers.api);
+
+// TODO: Not found and error middleware

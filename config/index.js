@@ -3,11 +3,38 @@
  */
 
 var nconf = require('nconf');
-
-nconf.use('memory');
-nconf.argv().env();
-
-// Load configuration
-nconf.add('default', { type : 'file', file : 'config/env/config.json' });
-
 exports.express = require('./express');
+
+// nconf setup
+nconf
+    .argv()
+    .env()
+    .file({
+        file : 'config/env/config.json'
+    });
+
+/**
+ * Get config value
+ * @param key
+ * @returns {*|String}
+ */
+exports.get = function(key){
+    return nconf.get(key);
+};
+
+/**
+ * Set config value
+ * @param key
+ * @returns {*}
+ */
+exports.set = function(key){
+    return nconf.set(key);
+};
+
+/**
+ * Save current configuration in store.
+ * @param fn
+ */
+exports.save = function(fn){
+    nconf.save(fn);
+};
