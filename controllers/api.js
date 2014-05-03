@@ -94,6 +94,10 @@ router
         if(!req.query.profile){
             return invalidParam('Invalid param {profile}: Parameter is required.');
         }
+
+        if(!/^[0-9]+$/.test(req.query.profile)){
+            return invalidParam('Invalid param {profile}: Format is simple integer');
+        }
         
         var metrics = req.query.metrics.split(',');
         
