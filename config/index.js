@@ -27,8 +27,8 @@ exports.get = function(key){
  * @param key
  * @returns {*}
  */
-exports.set = function(key){
-    return nconf.set(key);
+exports.set = function(key, value){
+    return nconf.set(key, value);
 };
 
 /**
