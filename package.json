@@ -5,7 +5,9 @@
   "main": "app.js",
   "description": "The Simple API for Google Analytics™",
   "homepage": "http://oocharts.com",
-  "scripts": {},
+  "scripts": {
+      "start" : "node app.js"
+  },
   "dependencies": {
     "moment": "~2.6.0",
     "express": "~4.1.1",

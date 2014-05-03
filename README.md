@@ -28,3 +28,18 @@ Download OOcharts to wherever you'd like to run it from. Direct your console to 
 Navigate to `/setup`.
 
 Fill in the information. Make sure the host URL matches the host you used when setting up your Google project. In my case, I would use `http://mysite.com:4004`. If the setup worked correctly, you should be redirected to Google for authentication. Once complete, you will be provided your API Key. Use OOcharts just like before!
+
+### Reset
+
+You can reset OOcharts from running the bash script in the project root:
+
+`bash reset.sh`
+
+or by replacing the file contents of `config/env/config.json` with:
+
+```json
+{
+    "state" : "installed",
+    "port" : "4004"
+}
+```
