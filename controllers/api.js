@@ -9,6 +9,9 @@ var config = require('../config');
 var gaValidator = require('ga-validator');
 var googleapis = require('googleapis');
 var OAuth2 = googleapis.auth.OAuth2;
+var moment = require('moment');
+var services = require('services');
+var dateService = services.date;
 
 var oauth2Client;
 
@@ -120,4 +123,34 @@ router
                 }
             }
         }
+
+        if(!req.query.start || !dateService.isValidDate(req.query.start)){
+            return invalidParam('Invalid param {start}: Should be of form YYYY-MM-DD.');
+        }
+
+        if(req.query.end){
+            if(!dateService.isValidDate(req.query.end)){
+                return invalidParam('Invalid param {end}: Should be of form YYYY-MM-DD.');
+            }
+
+            if(dateService.isRelativeDate(req.query.start) && dateService.isRelativeDate(req.query.end)){
+                return invalidParam('Invalid Params {end} and {start}: One value should be of form YYYY-MM-DD');
+            }
+        }
+
+        var endDate, startDate;
+
+        if(!req.query.end){
+            req.query.end = moment().format('YYYY-MM-DD');
+        }
+
+        if(!dateService.isRelativeDate(req.query.start)){
+            startDate = moment(req.query.start).startOf('day');
+        }
+
+        if(!dateService.isRelativeDate(req.query.end)){
+            endDate = moment(req.query.end).startOf('day');
+        }
+
+
     });
