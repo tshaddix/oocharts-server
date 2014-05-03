@@ -33,7 +33,7 @@
     <!--</p>-->
     <!--</section>-->
     <section>
-        <p>OOcharts Server is a simple, installable, Google Analytics proxy service which allows Google Analytics data to be shared on public dashboards.</p>
+        <p>OOcharts Server is a simple, installable, proxy service which allows Google Analytics™ data to be shared on public dashboards.</p>
     </section>
 
     <section>
@@ -64,6 +64,17 @@
             </p>
             <p>
                 <kbd>sh configure.sh</kbd>
+            </p>
+
+            <p>
+                If your host OS doesn't support running shell scripts, you can create a directory <code>env</code> under the project root <code>oocharts-server/config</code> directory (so it would be <code>oocharts-server/config/env</code> and then create a <code>config.json</code> file within the directory which has the following contents:
+            </p>
+
+            <p>
+<pre>{
+    "state" : "installed",
+    "port" : 4004
+}</pre>
             </p>
         </div>
 
