@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>OOcharts Server by OOcharts</title>
 
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lobster"/>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Arvo:400,700"/>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/styles.css">
 
@@ -15,14 +17,14 @@
 </head>
 <body>
 
-<header>
+<header class="main-header">
     <div class="container text-center">
-        <h1>OOcharts Server</h1>
-        <p>Installable OOcharts server. (Alpha alpha)</p>
+        <h1>OOcharts <span class="oocharts-teal">Server</span></h1>
+        <h4>The Simple API for Google Analytics™</h4>
 
     </div>
 </header>
-<div class="container">
+<div class="main-content container">
     <!--<section>-->
     <!--<h2>Hosting</h2>-->
     <!--<p>We will be using Digital Ocean for our example OOcharts server. If you want to try out Digital Ocean and use us as a reference (to support further development), please use the button below.</p>-->
@@ -40,30 +42,36 @@
             OOcharts Server requires <b>NodeJS</b> and <b>NPM</b> to be installed on the host.
         </p>
 
-        <h3>Ubuntu</h3>
-        <p>
-            If you're installing OOcharts on an Ubuntu host, you can use the command below to download and run an easy setup script of the latest OOcharts Server.
-        </p>
-        <p>
-            <kbd>wget -qO- http://oocharts.github.io/oocharts-server/install/ubuntu.sh | sh</kbd>
-        </p>
+        <div class="well">
+            <h3>Ubuntu</h3>
+            <p>
+                If you're installing OOcharts on an Ubuntu host, you can use the command below to download and run an easy setup script of the latest OOcharts Server.
+            </p>
+            <p>
+                <kbd>wget -qO- http://oocharts.github.io/oocharts-server/install/ubuntu.sh | sh</kbd>
+            </p>
 
-        <h3>Custom</h3>
-        <p>
-            Download an <a href="https://github.com/OOcharts/oocharts-server/releases" target="_blank">OOcharts Release</a>. Install dependencies and run configuration script from within the project root:
-        </p>
-        <p>
-            <kbd>npm install</kbd>
-        </p>
-        <p>
-            <kbd>sh configure.sh</kbd>
-        </p>
+        </div>
+
+        <div class="well">
+
+            <h3>Custom</h3>
+            <p>
+                Download an <a href="https://github.com/OOcharts/oocharts-server/releases" target="_blank">OOcharts Release</a>. Install dependencies and run configuration script from within the project root:
+            </p>
+            <p>
+                <kbd>npm install</kbd>
+            </p>
+            <p>
+                <kbd>sh configure.sh</kbd>
+            </p>
+        </div>
 
     </section>
     <section>
         <h2>Getting Started</h2>
         <p>If you'd like a step by step tutorial of how to setup OOcharts Server from start to finish, take a look at our tutorial.</p>
-        <a class="btn btn-primary" href="./setup-tutorial">Go to Setup Tutorial</a>
+        <a class="btn btn-primary" href="./setup-tutorial.html">Go to Setup Tutorial</a>
     </section>
 </div>
 

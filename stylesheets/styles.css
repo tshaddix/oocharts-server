@@ -1,0 +1,37 @@
+body {
+    background: #f2f2f2;
+}
+
+.oocharts-teal {
+    color : #1abc9c;
+}
+
+.main-header {
+    background-color: #363f48;
+    padding-top : 60px;
+    padding-bottom : 60px;
+}
+
+.main-header h1 {
+    color : #fff;
+    font-family: "Lobster";
+}
+
+.main-header h4 {
+    color : #849cb5;
+}
+
+h2 {
+    font-family: "Arvo";
+}
+
+.main-content {
+    padding-top: 40px;
+    padding-bottom : 40px;
+}
+
+.btn-primary {
+    background: #1abc9c;
+    font-family: "Arvo",sans-serif;
+    border : 0;
+}
