@@ -35,3 +35,8 @@ h2 {
     font-family: "Arvo",sans-serif;
     border : 0;
 }
+
+.navbar {
+
+    margin-bottom : 0;
+}
