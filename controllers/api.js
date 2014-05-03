@@ -222,6 +222,8 @@ router
             query['start-index'] = index;
         }
 
+        // TODO: Consider Queue from legacy system ("Cue")
+
         analyticsClient.analytics.data.ga.get(query).withAuthClient(oauth2Client).execute(function(err, result){
             console.log(err);
 
