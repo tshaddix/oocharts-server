@@ -10,9 +10,10 @@ var gaValidator = require('ga-validator');
 var googleapis = require('googleapis');
 var OAuth2 = googleapis.auth.OAuth2;
 var moment = require('moment');
-var services = require('services');
+var services = require('../services');
 var dateService = services.date;
 var gaParser = services.gaParser;
+var url = require('url');
 
 var oauth2Client, analyticsClient;
 
@@ -34,14 +35,8 @@ router
     })
 
     .param('responseType', function(req, res, next, rt){
-        if(rt === 'json'){
-            res.respond = function(a, b){
-                res.json(a, b);
-            };
-        } else if(rt === 'jsonp'){
-            res.respond = function(a, b){
-                res.jsonp(a, b);
-            };
+        if(rt === 'json' || rt === 'jsonp'){
+            req.rt = rt;
         } else {
             return res.send(400, 'Unsupported response type: ' + rt + '.');
         }
@@ -79,7 +74,7 @@ router
     .get('/dynamic.:responseType', function(req, res, next){
 
         var invalidParam = function(msg){
-            res.respond(400, {
+            res[req.rt](400, {
                 error : msg
             });
         };
@@ -102,7 +97,7 @@ router
         
         var metrics = req.query.metrics.split(',');
         
-        for(var _m = 0; _m < metrics.length; m++){
+        for(var _m = 0; _m < metrics.length; _m++){
             if(!gaValidator.checkMetric(metrics[_m])){
                 return invalidParam('Invalid param {metrics}: ' + metrics[_m] + ' is not valid metric.');
             }
@@ -201,24 +196,40 @@ router
         var index = typeof req.query.index !== 'undefined' ? parseInt(req.query.index) : undefined;
         var maxResults = typeof req.query.maxResults !== 'undefined'? parseInt(req.query.maxResults) : undefined;
 
-        analyticsClient.analytics.data.ga.get({
+        var query = {
             ids: 'ga:' + req.query.profile,
             "start-date": startDate.format('YYYY-MM-DD'),
             "end-date": endDate.format('YYYY-MM-DD'),
             metrics: metrics,
             dimensions: dimensions,
-            filters: req.query.filters,
-            "max-results": maxResults,
-            segment: req.query.segment,
             sort: sort,
-            "start-index": index,
             fields: 'columnHeaders,rows,totalResults'
-        }).withAuthClient(oauth2Client).execute(function(err, result){
+        };
+
+        if(req.query.filters){
+            query.filters = req.query.filters;
+        }
+
+        if(typeof maxResults !== 'undefined'){
+            query['max-results'] = maxResults;
+        }
+
+        if(req.query.segment){
+            query.segment = req.query.segment;
+        }
+
+        if(typeof index !== 'undefined'){
+            query['start-index'] = index;
+        }
+
+        analyticsClient.analytics.data.ga.get(query).withAuthClient(oauth2Client).execute(function(err, result){
+            console.log(err);
+
             if(err) return next(err);
 
-            res.respond({
+            res[req.rt]({
                 columnHeaders : result.columnHeaders,
-                rows : gaParser.parseDate(result.columnHeaders, result.rows || []),
+                rows : gaParser.parseData(result.columnHeaders, result.rows || []),
                 totalResults : result.totalResults
             });
 
