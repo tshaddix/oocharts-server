@@ -12,8 +12,9 @@ var OAuth2 = googleapis.auth.OAuth2;
 var moment = require('moment');
 var services = require('services');
 var dateService = services.date;
+var gaParser = services.gaParser;
 
-var oauth2Client;
+var oauth2Client, analyticsClient;
 
 router
     .use(function(req, res, next){
@@ -49,13 +50,30 @@ router
     })
 
     .use(function(req, res, next){
-        oauth2Client = oauth2Client || new OAuth2(
-            config.get('googleApp:clientId'),
-            config.get('googleApp:clientSecret'),
-            url.resolve(config.get('hostUrl'), '/setup/google-callback')
-        );
 
-        next();
+        if(!oauth2Client) {
+            oauth2Client = new OAuth2(
+                config.get('googleApp:clientId'),
+                config.get('googleApp:clientSecret'),
+                url.resolve(config.get('hostUrl'), '/setup/google-callback')
+            );
+
+            oauth2Client.credentials = {
+                access_token: config.get('googleAccount:accessToken'),
+                refresh_token: config.get('googleAccount:refreshToken')
+            };
+        }
+
+        if(!analyticsClient){
+            googleapis.discover('analytics', 'v3').execute(function(err, client) {
+                if(err) return next(err);
+
+                analyticsClient = client;
+                next();
+            });
+        } else {
+            next();
+        }
     })
 
     .get('/dynamic.:responseType', function(req, res, next){
@@ -66,11 +84,11 @@ router
             });
         };
 
-        if(req.query.index &&  /^[0-9]+$/.test(index)){
+        if(typeof req.query.index !== 'undefined' &&  /^[0-9]+$/.test(index)){
             return invalidParam('Invalid param {index}: Must be a valid integer.');
         }
 
-        if(req.query.maxResults && /^[0-9]+$/.test(maxResults)){
+        if(typeof req.query.maxResults !== 'undefined' && /^[0-9]+$/.test(maxResults)){
             return invalidParam('Invalid param {maxResults}: Must be a valid integer.');
         }
         
@@ -152,5 +170,66 @@ router
             endDate = moment(req.query.end).startOf('day');
         }
 
+        if(dateService.isRelativeDate(req.query.end)){
+            endDate = dateService.relatizeDate(startDate, req.query.end, false);
+        }
 
+        if(dateService.isRelativeDate(req.query.start)){
+            startDate = dateService.relatizeDate(endDate, req.query.start, true);
+        }
+
+        if(!startDate.isValid()){
+            return invalidParam('Invalid param {start}: Not a valid date.');
+        }
+
+        if(!endDate.isValid){
+            return invalidParam('Invalid param {end}: Not a valid date.');
+        }
+
+        if(startDate.isBefore('2005-01-01')){
+            return invalidParam('Invalid param {start}:  Date can not be before 01-01-2005');
+        }
+
+        if(endDate.isBefore('2005-01-01')){
+            return invalidParam('Invalid param {end}:  Date can not be before 01-01-2005');
+        }
+
+        if(endDate.isBefore(startDate)){
+            return invalidParam('Invalid param {end}: End date can not be before start date');
+        }
+
+        var index = typeof req.query.index !== 'undefined' ? parseInt(req.query.index) : undefined;
+        var maxResults = typeof req.query.maxResults !== 'undefined'? parseInt(req.query.maxResults) : undefined;
+
+        analyticsClient.analytics.data.ga.get({
+            ids: 'ga:' + req.query.profile,
+            "start-date": startDate.format('YYYY-MM-DD'),
+            "end-date": endDate.format('YYYY-MM-DD'),
+            metrics: metrics,
+            dimensions: dimensions,
+            filters: req.query.filters,
+            "max-results": maxResults,
+            segment: req.query.segment,
+            sort: sort,
+            "start-index": index,
+            fields: 'columnHeaders,rows,totalResults'
+        }).withAuthClient(oauth2Client).execute(function(err, result){
+            if(err) return next(err);
+
+            res.respond({
+                columnHeaders : result.columnHeaders,
+                rows : gaParser.parseDate(result.columnHeaders, result.rows || []),
+                totalResults : result.totalResults
+            });
+
+            if(oauth2Client.credentials.access_token !== config.get('googleAccount:accessToken')){
+                config.set('googleAccount:accessToken', oauth2Client.credentials.access_token);
+
+                config.save(function(err){
+                    if(err) console.error(err);
+
+                    console.log('Google access token updated.');
+                });
+            }
+        });
     });
