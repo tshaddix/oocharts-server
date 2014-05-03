@@ -7,11 +7,11 @@
   "homepage": "http://oocharts.com",
   "scripts": {},
   "dependencies": {
-    "moment": "~2.6.0",
     "express": "~4.1.1",
     "nconf": "~0.6.9",
     "googleapis": "~0.7.0",
     "body-parser": "~1.0.2",
-    "async": "~0.8.0"
+    "async": "~0.8.0",
+    "ga-validator": "~0.1.5"
   }
 }
