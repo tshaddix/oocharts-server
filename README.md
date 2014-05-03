@@ -33,7 +33,7 @@ Fill in the information. Make sure the host URL matches the host you used when s
 
 You can reset OOcharts from running the bash script in the project root:
 
-`bash reset.sh`
+`bash configure.sh`
 
 or by replacing the file contents of `config/env/config.json` with:
 
