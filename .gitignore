@@ -28,4 +28,4 @@ node_modules
 .idea
 
 # Do not save config
-config/env/config.json
+config/env
