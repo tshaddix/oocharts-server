@@ -3,8 +3,9 @@
  */
 
 var express = require('express');
-var router = express.Router();
+var router = module.exports = express.Router();
 var config = require('../config');
+var path = require('path');
 
 router
     .use(function(req, res, next){
@@ -16,7 +17,7 @@ router
     })
 
     .get('/', function(req, res, next){
-
+        res.sendfile(path.join(__dirname, '../resources/setup.html'));
     })
 
     .post('/', function(req, res, next){

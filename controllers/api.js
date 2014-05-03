@@ -4,7 +4,7 @@
 
 
 var express = require('express');
-var router = express.Router();
+var router = module.exports = express.Router();
 var config = require('../config');
 
 router
