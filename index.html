@@ -72,68 +72,112 @@
         <h3>
             The Server
         </h3>
-        <p>
-            To get started, we will setup an Ubuntu 14.04 server on Digital Ocean. It's as simple as creating a $5/mo droplet. Once we have an IP address for the new server, I will assign it to a domain in my DNS settings. For this example, the server will be located at <code>oocharts.tylershaddix.com</code>.
+        <!-- copy and paste. Modify height and width if desired. -->
+        <object id="scPlayer1"  width="675" height="335" type="application/x-shockwave-flash" data="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/e6e4707a-c112-4342-8775-a2437905b3e2/bootstrap.swf" >
+            <param name="movie" value="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/e6e4707a-c112-4342-8775-a2437905b3e2/bootstrap.swf" />
+            <param name="quality" value="high" />
+            <param name="bgcolor" value="#FFFFFF" />
+            <param name="flashVars" value="thumb=http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/e6e4707a-c112-4342-8775-a2437905b3e2/FirstFrame.jpg&containerwidth=1350&containerheight=730&content=http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/e6e4707a-c112-4342-8775-a2437905b3e2/Installing_OOcharts_Server_on_DO.swf&blurover=false" />
+            <param name="allowFullScreen" value="true" />
+            <param name="scale" value="showall" />
+            <param name="allowScriptAccess" value="always" />
+            <param name="base" value="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/e6e4707a-c112-4342-8775-a2437905b3e2/" />
+            Unable to display content. Adobe Flash is required.
+        </object>
+        <div class="well">
+            <p>
+                To get started, we will setup an Ubuntu 14.04 server on Digital Ocean. It's as simple as creating a $5/mo droplet. Once we have an IP address for the new server, I will assign it to a domain in my DNS settings. For this example, the server will be located at <code>oocharts.tinb.in</code>.
 
-        </p>
-        <p>
-            For a Digital Ocean Ubuntu 14.04 server, I only need to install two things before continuing. As root (or a sudo user) I am going to install NodeJS and NPM (Node Package Manager):
-        </p>
-        <p>
-            <kbd>
-                apt-get install nodejs npm
-            </kbd>
-        </p>
-        <p>
-            And now we can install OOcharts by running this command in the directory we want OOcharts Server installed:
-        </p>
-        <p>
-            <kbd>wget -qO- http://oocharts.github.io/oocharts-server/install/linux.sh | sh</kbd>
-        </p>
-        <p>
-            Ready to run OOcharts?
-        </p>
-        <p>
-            <kbd>cd oocharts-server && nodejs app</kbd>
-        </p>
+            </p>
+            <p>
+                For a Digital Ocean Ubuntu 14.04 server, I only need to install two things before continuing. As root (or a sudo user) I am going to install NodeJS and NPM (Node Package Manager):
+            </p>
+            <p>
+                <kbd>
+                    apt-get install nodejs npm
+                </kbd>
+            </p>
+            <p>
+                And now we can install OOcharts by running this command in the directory we want OOcharts Server installed:
+            </p>
+            <p>
+                <kbd>wget -qO- http://server.oocharts.com/install/linux.sh | sh</kbd>
+            </p>
+            <p>
+                Ready to run OOcharts?
+            </p>
+            <p>
+                <kbd>cd oocharts-server && nodejs app</kbd>
+            </p>
+        </div>
     </section>
     <section>
         <h3>
             The Google App
         </h3>
-        <p>
-            Go to <a href="https://console.developers.google.com/project">Google Developer Console</a>.
-        </p>
-        <p>
-            Create a Project. Pick whatever Project name and Project ID you'd like. I use "OOcharts Server" for the name and choose whatever project ID is generated for me.
-        </p>
-        <p>
-            Once the project has been created, navigate to the APIs & auth section.
-        </p>
-        <p>
-            Under APIs, turn on "Analytics API" and turn off any other APIs that may default to on (Such as "Google Cloud SQL").
-        </p>
-        <p>
-            Next, go the Credentials. Select "Create a New Client ID". OOcharts is a Web Application. Remove the Authorized JavaScript origins and then in the callback section you will be putting your server domain plus a few extras. By default, OOcharts runs on port 4004 and has a callback url of <code>/setup/google-callback</code>. In this example, I would put as the Authorized redirect URI: <code>http://oocharts.tylershaddix.com:4004/setup/google-callback</code>.
-        </p>
-        <p>
-            Once the ID is created, take note of the Client ID and Client secret provided. We will need them when we setup OOcharts.
-        </p>
+        <!-- copy and paste. Modify height and width if desired. -->
+        <object id="scPlayer2"  width="675" height="335" type="application/x-shockwave-flash" data="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/91292b14-66d0-42af-a01c-fb50e952a573/bootstrap.swf" >
+            <param name="movie" value="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/91292b14-66d0-42af-a01c-fb50e952a573/bootstrap.swf" />
+            <param name="quality" value="high" />
+            <param name="bgcolor" value="#FFFFFF" />
+            <param name="flashVars" value="thumb=http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/91292b14-66d0-42af-a01c-fb50e952a573/FirstFrame.jpg&containerwidth=1350&containerheight=669&content=http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/91292b14-66d0-42af-a01c-fb50e952a573/Creating_OOcharts_Google_App.swf&blurover=false" />
+            <param name="allowFullScreen" value="true" />
+            <param name="scale" value="showall" />
+            <param name="allowScriptAccess" value="always" />
+            <param name="base" value="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/91292b14-66d0-42af-a01c-fb50e952a573/" />
+            Unable to display content. Adobe Flash is required.
+        </object>
+        <div class="well">
+            <p>
+                Go to <a href="https://console.developers.google.com/project">Google Developer Console</a>.
+            </p>
+            <p>
+                Create a Project. Pick whatever Project name and Project ID you'd like. I use "OOcharts Server" for the name and choose whatever project ID is generated for me.
+            </p>
+            <p>
+                Once the project has been created, navigate to the APIs & auth section.
+            </p>
+            <p>
+                Under APIs, turn on "Analytics API" and turn off any other APIs that may default to on (Such as "Google Cloud SQL").
+            </p>
+            <p>
+                Next, go the Credentials. Select "Create a New Client ID". OOcharts is a Web Application. Remove the Authorized JavaScript origins and then in the callback section you will be putting your server domain plus a few extras. By default, OOcharts runs on port 4004 and has a callback url of <code>/setup/google-callback</code>. In this example, I would put as the Authorized redirect URI: <code>http://oocharts.tinb.in:4004/setup/google-callback</code>.
+            </p>
+            <p>
+                Once the ID is created, take note of the Client ID and Client secret provided. We will need them when we setup OOcharts.
+            </p>
+        </div>
     </section>
     <section>
         <h3>Setup OOcharts Server</h3>
-        <p>
-            Now you're ready for the last step, which is configuring your server. Navigate to <code>/setup</code>. In my case, I would navigate to <code>http://oocharts.tylershaddix.com:4004/setup</code>.
-        </p>
-        <p>
-            Fill in the Google Client ID and Secret you created above. In the host url, I would put <code>http://oocharts.tylershaddix.com:4004</code>.
-        </p>
-        <p>
-            If you want to specify your own API Key (perhaps from your OOcharts legacy account), you can fill in that field. If not, the server will generate one and present it to you when you're done connecting your account.
-        </p>
-        <p>
-            Submitting the form should redirect you to Google for Authorization. When you return, your API Key will be ready for you.
-        </p>
+
+        <!-- copy and paste. Modify height and width if desired. -->
+        <object id="scPlayer3"  width="675" height="335" type="application/x-shockwave-flash" data="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/6a7afa8e-3edd-4810-88bb-3a02554f4cf6/bootstrap.swf" >
+            <param name="movie" value="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/6a7afa8e-3edd-4810-88bb-3a02554f4cf6/bootstrap.swf" />
+            <param name="quality" value="high" />
+            <param name="bgcolor" value="#FFFFFF" />
+            <param name="flashVars" value="thumb=http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/6a7afa8e-3edd-4810-88bb-3a02554f4cf6/FirstFrame.jpg&containerwidth=1366&containerheight=819&content=http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/6a7afa8e-3edd-4810-88bb-3a02554f4cf6/Setting_up_OOcharts_Server.swf&blurover=false" />
+            <param name="allowFullScreen" value="true" />
+            <param name="scale" value="showall" />
+            <param name="allowScriptAccess" value="always" />
+            <param name="base" value="http://content.screencast.com/users/tylershaddix/folders/OOcharts/media/6a7afa8e-3edd-4810-88bb-3a02554f4cf6/" />
+            Unable to display content. Adobe Flash is required.
+        </object>
+
+        <div class="well">
+            <p>
+                Now you're ready for the last step, which is configuring your server. Navigate to <code>/setup</code>. In my case, I would navigate to <code>http://oocharts.tinb.in:4004/setup</code>.
+            </p>
+            <p>
+                Fill in the Google Client ID and Secret you created above. In the host url, I would put <code>http://oocharts.tinb.in:4004</code>.
+            </p>
+            <p>
+                If you want to specify your own API Key (perhaps from your OOcharts legacy account), you can fill in that field. If not, the server will generate one and present it to you when you're done connecting your account.
+            </p>
+            <p>
+                Submitting the form should redirect you to Google for Authorization. When you return, your API Key will be ready for you.
+            </p>
+        </div>
     </section>
     <section>
         <h3>Using OOcharts</h3>
@@ -146,7 +190,7 @@
                 href="https://github.com/OOcharts/oocharts-legacy-charts">oocharts-legacy-charts</a>. Just use the <code>oo.setServiceEndpoint(endpoint)</code> method to point to your newly created server. In my case, I would use:
         </p>
         <p>
-            <code>oo.setServiceEndpoint('http://oocharts.tylershaddi.com:4004/api/dynamic.jsonp');</code>
+            <code>oo.setServiceEndpoint('http://oocharts.tinb.in:4004/api/dynamic.jsonp');</code>
         </p>
     </section>
 </div>
