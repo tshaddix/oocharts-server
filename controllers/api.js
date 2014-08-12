@@ -114,7 +114,7 @@ router
         if(req.query.dimensions) {
             dimensions = req.query.dimensions.split(',');
 
-            for (var _d = 0; _d < dimensions.length; d++) {
+            for (var _d = 0; _d < dimensions.length; _d++) {
                 if (!gaValidator.checkDimension(dimensions[_d])) {
                     return invalidParam('Invalid param {dimensions}: ' + dimensions[_d] + ' is not valid dimension.');
                 }
