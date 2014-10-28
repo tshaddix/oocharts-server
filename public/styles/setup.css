@@ -74,3 +74,20 @@ body {
 .message .message-close:focus {
     color : #fff;
 }
+
+.configure-success-msg {
+}
+
+.configure-success-msg .api-key {
+    margin-top : 40px;
+    margin-bottom : 40px;
+    text-align: center;
+    font-size: 20px;
+    color : #5677fc;
+    padding : 20px;
+    background: #f0f0f0;
+}
+
+.configure-success-msg .hint {
+    font-size : 12px;
+}

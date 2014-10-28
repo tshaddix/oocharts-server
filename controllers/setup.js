@@ -13,7 +13,7 @@ var OAuth2 = googleapis.auth.OAuth2;
 var GOOGLE_AUTH_SCOPE = 'https://www.googleapis.com/auth/analytics';
 
 router
-    .use(function(req, res, next){
+    .use('^\/setup$|^\/google-callback$', function(req, res, next){
         if(nconf.get('isSetup') === true){
             res.send(403, 'OOcharts server has already been setup.');
         } else {
@@ -21,11 +21,11 @@ router
         }
     })
 
-    .get('/', function(req, res, next){
+    .get('/setup', function(req, res, next){
         res.render('configure');
     })
 
-    .post('/', function(req, res, next){
+    .post('/setup', function(req, res, next){
         var googleClientId = (req.body.googleClientId || '').trim();
         var googleClientSecret = (req.body.googleClientSecret || '').trim();
         var apiKey = (req.body.apiKey || '').trim();
@@ -42,8 +42,7 @@ router
         // TODO: Better Validation for API Key and HOST URL
 
         if(!apiKey){
-            // TODO: Generate API Key
-            apiKey = "AAAAA1111111BBBBBBCCCCCCC";
+            apiKey = Math.random().toString(36).substring(2);
         }
 
         nconf.set('googleApp:clientId', googleClientId);
@@ -57,7 +56,7 @@ router
             var oauth2Client = new OAuth2(
                 googleClientId,
                 googleClientSecret,
-                url.resolve(hostUrl, '/setup/google-callback')
+                url.resolve(hostUrl, '/google-callback')
             );
 
             var authUrl = oauth2Client.generateAuthUrl({
@@ -81,7 +80,7 @@ router
         var oauth2Client = new OAuth2(
             nconf.get('googleApp:clientId'),
             nconf.get('googleApp:clientSecret'),
-            url.resolve(nconf.get('hostUrl'), '/setup/google-callback')
+            url.resolve(nconf.get('hostUrl'), '/google-callback')
         );
 
         oauth2Client.getToken(code, function(err, tokens){

@@ -18,7 +18,7 @@ app.set('view engine', '.hbs');
 app.use(require('body-parser')());
 
 // Controllers
-app.use('/setup', controllers.setup);
+app.use('/', controllers.setup);
 app.use('/api', controllers.api);
 
 app.use(express.static(path.join(__dirname, '../public')));
