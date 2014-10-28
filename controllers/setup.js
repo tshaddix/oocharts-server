@@ -4,7 +4,7 @@
 
 var express = require('express');
 var router = module.exports = express.Router();
-var config = require('../config');
+var nconf = require('nconf');
 var path = require('path');
 var url = require('url');
 var googleapis = require('googleapis');
@@ -14,7 +14,7 @@ var GOOGLE_AUTH_SCOPE = 'https://www.googleapis.com/auth/analytics';
 
 router
     .use(function(req, res, next){
-        if(config.get('state') !== 'installed'){
+        if(nconf.get('isSetup') === true){
             res.send(403, 'OOcharts server has already been setup.');
         } else {
             next();
@@ -22,31 +22,37 @@ router
     })
 
     .get('/', function(req, res, next){
-        res.sendfile(path.join(__dirname, '../resources/setup.html'));
+        res.render('configure');
     })
 
     .post('/', function(req, res, next){
-        var googleClientId = req.body.googleClientId;
-        var googleClientSecret = req.body.googleClientSecret;
-        var apiKey = req.body.apiKey;
-        var hostUrl = req.body.hostUrl;
+        var googleClientId = (req.body.googleClientId || '').trim();
+        var googleClientSecret = (req.body.googleClientSecret || '').trim();
+        var apiKey = (req.body.apiKey || '').trim();
+        var hostUrl = (req.body.hostUrl || '').trim();
 
-        if(!googleClientId) return res.redirect('/setup');
-        if(!googleClientSecret) return res.redirect('/setup');
-        if(!hostUrl) return res.redirect('/setup');
+        var _error = function(err){
+            res.render('configure', { error : err });
+        };
+
+        if(!googleClientId) return _error("Google Client Id is required.");
+        if(!googleClientSecret) return _error("Google Client Secret is required.");
+        if(!hostUrl) return _error("Host URL is required.");
+
+        // TODO: Better Validation for API Key and HOST URL
 
         if(!apiKey){
             // TODO: Generate API Key
             apiKey = "AAAAA1111111BBBBBBCCCCCCC";
         }
 
-        config.set('googleApp:clientId', googleClientId);
-        config.set('googleApp:clientSecret', googleClientSecret);
-        config.set('hostUrl', hostUrl);
-        config.set('apiKey', apiKey);
+        nconf.set('googleApp:clientId', googleClientId);
+        nconf.set('googleApp:clientSecret', googleClientSecret);
+        nconf.set('hostUrl', hostUrl);
+        nconf.set('apiKey', apiKey);
 
-        config.save(function(err){
-            if(err) return next(err);
+        nconf.save(function(err){
+            if(err) return _error(err);
 
             var oauth2Client = new OAuth2(
                 googleClientId,
@@ -73,22 +79,23 @@ router
         if(!code) return res.redirect('/setup');
 
         var oauth2Client = new OAuth2(
-            config.get('googleApp:clientId'),
-            config.get('googleApp:clientSecret'),
-            url.resolve(config.get('hostUrl'), '/setup/google-callback')
+            nconf.get('googleApp:clientId'),
+            nconf.get('googleApp:clientSecret'),
+            url.resolve(nconf.get('hostUrl'), '/setup/google-callback')
         );
 
         oauth2Client.getToken(code, function(err, tokens){
            if(err) return next(err);
 
-            config.set('googleAccount:accessToken', tokens.access_token);
-            config.set('googleAccount:refreshToken', tokens.refresh_token);
-            config.set('state', 'authorized');
+            nconf.set('googleAccount:accessToken', tokens.access_token);
+            nconf.set('googleAccount:refreshToken', tokens.refresh_token);
+            nconf.set('isSetup', true);
 
-            config.save(function(err) {
+            nconf.save(function(err) {
                 if(err) return next(err);
 
-                res.send('OOcharts Server is now configured! API Key: ' + config.get('apiKey'));
+                res.locals.apiKey = nconf.get('apiKey');
+                res.render('configure-success');
             });
         });
     });

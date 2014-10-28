@@ -27,5 +27,9 @@ node_modules
 # WebStorm
 .idea
 
-# Do not save config
-config/env
+# Do not save instance config
+config/env/instance.json
+
+bower_components
+
+public/oocharts

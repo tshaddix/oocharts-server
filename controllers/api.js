@@ -5,7 +5,7 @@
 
 var express = require('express');
 var router = module.exports = express.Router();
-var config = require('../config');
+var nconf = require('nconf');
 var gaValidator = require('ga-validator');
 var googleapis = require('googleapis');
 var OAuth2 = googleapis.auth.OAuth2;
@@ -19,7 +19,7 @@ var oauth2Client, analyticsClient;
 
 router
     .use(function(req, res, next){
-        if(config.get('state') !== 'authorized'){
+        if(nconf.get('isSetup') !== true){
             res.send(403, 'OOcharts server has not been setup.');
         } else {
             next();
@@ -27,7 +27,7 @@ router
     })
 
     .use(function(req, res, next){
-        if(config.get('apiKey') !==  req.query.key){
+        if(nconf.get('apiKey') !==  req.query.key){
             res.send(403, 'API Key is not valid.');
         } else {
             next();
@@ -48,14 +48,14 @@ router
 
         if(!oauth2Client) {
             oauth2Client = new OAuth2(
-                config.get('googleApp:clientId'),
-                config.get('googleApp:clientSecret'),
-                url.resolve(config.get('hostUrl'), '/setup/google-callback')
+                nconf.get('googleApp:clientId'),
+                nconf.get('googleApp:clientSecret'),
+                url.resolve(nconf.get('hostUrl'), '/setup/google-callback')
             );
 
             oauth2Client.credentials = {
-                access_token: config.get('googleAccount:accessToken'),
-                refresh_token: config.get('googleAccount:refreshToken')
+                access_token: nconf.get('googleAccount:accessToken'),
+                refresh_token: nconf.get('googleAccount:refreshToken')
             };
         }
 
@@ -204,8 +204,8 @@ router
             ids: 'ga:' + req.query.profile,
             "start-date": startDate.format('YYYY-MM-DD'),
             "end-date": endDate.format('YYYY-MM-DD'),
-            metrics: metrics,
-            dimensions: dimensions,
+            metrics: metrics.toString(),
+            dimensions: dimensions.toString(),
             sort: sort,
             fields: 'columnHeaders,rows,totalResults'
         };
@@ -237,10 +237,10 @@ router
                 totalResults : result.totalResults
             });
 
-            if(oauth2Client.credentials.access_token !== config.get('googleAccount:accessToken')){
-                config.set('googleAccount:accessToken', oauth2Client.credentials.access_token);
+            if(oauth2Client.credentials.access_token !== nconf.get('googleAccount:accessToken')){
+                nconf.set('googleAccount:accessToken', oauth2Client.credentials.access_token);
 
-                config.save(function(err){
+                nconf.save(function(err){
                     if(err) console.error(err);
 
                     console.log('Google access token updated.');

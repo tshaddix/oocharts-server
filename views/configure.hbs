@@ -1,0 +1,49 @@
+<div class="configure container">
+    {{#if error}}
+        <div class="message message-error">
+            <button class="message-close" data-close="message">
+                <i class="icon ion-close-circled"></i>
+            </button>
+            <strong>Error:</strong> {{error}}
+        </div>
+    {{/if}}
+    <form action="/setup" method="post" class="pure-form pure-form-stacked">
+        <fieldset>
+            <div class="form-group">
+                <label for="googleClientId">Google Client ID</label>
+                <p class="help-block">
+                    From your Google project page.
+                </p>
+                <input id="googleClientId" name="googleClientId" required>
+            </div>
+
+            <div class="form-group">
+                <label for="googleClientSecret">Google Client Secret</label>
+                <p class="help-block">
+                    Also from your Google project page.
+                </p>
+                <input id="googleClientSecret" name="googleClientSecret" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hostUrl">Host URL</label>
+                <p class="help-block">
+                    The url of where this is being hosted. <br/> For example: <strong>http://myserver.com:4004</strong>
+                </p>
+                <input id="hostUrl" name="hostUrl" required>
+            </div>
+
+            <div class="form-group">
+                <label for="apiKey">Custom API Key</label>
+                <p class="help-block">
+                    You can optionally set your own API Key here. If you don't, we will generate one for you. <br/> This can be helpful if you are migrating from the OOcharts service and don't want to change your code.
+                </p>
+                <input id="apiKey" name="apiKey" placeholder="Optional">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="pure-button pure-button-primary">Save and Continue</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

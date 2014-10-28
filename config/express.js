@@ -3,11 +3,17 @@
  */
 
 var express = require('express');
+var exphbs = require('express-handlebars');
 var controllers = require('../controllers');
+var path = require('path');
 
 var app = module.exports = express();
 
 app.disable('x-powered-by');
+
+// Setup Handlebars
+app.engine('.hbs', exphbs({defaultLayout: 'setup', extname: '.hbs'}));
+app.set('view engine', '.hbs');
 
 app.use(require('body-parser')());
 
@@ -15,4 +21,4 @@ app.use(require('body-parser')());
 app.use('/setup', controllers.setup);
 app.use('/api', controllers.api);
 
-// TODO: Not found and error middleware
+app.use(express.static(path.join(__dirname, '../public')));

@@ -1,0 +1,16 @@
+{
+  "name": "oocharts-server",
+  "version": "0.0.0",
+  "homepage": "https://github.com/OOcharts/oocharts-server",
+  "authors": [
+    "Tyler Shaddix <tylershaddix@gmail.com>"
+  ],
+  "description": "The Simple API for Google Analytics",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "pure": "~0.5.0",
+    "jquery": "~2.1.1",
+    "ionicons": "~1.5.2"
+  }
+}
