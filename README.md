@@ -14,3 +14,4 @@ Installable OOcharts server. [server.oocharts.com](http://server.oocharts.com)
 
 ### Contributors ###
 Phil Russell ([johnrussell9983](https://github.com/johnrussell9983))
+Sofia ([meddulla](https://github.com/meddulla))
